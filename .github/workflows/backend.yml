@@ -1,0 +1,54 @@
+# CI name
+name: 'Backend: стайлгайд и  тесты'
+
+on:
+    # The job condition says “Run this for everything EXCEPT non-merged closed PRs”.
+    push:
+        branches:
+            - '**'
+            - '!main'
+        paths:
+            - backend/**/*
+    pull_request:
+        paths:
+            - backend/**/*
+        types: [opened, synchronize, closed]
+
+defaults:
+    run:
+        shell: bash
+        working-directory: backend
+jobs:
+    backend-stylecheck:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Клонируем репозиторий
+              uses: actions/checkout@v2
+              with:
+                  # Забираем только последний коммит из ветки для ускорения
+                  fetch-depth: 1
+            - uses: actions/setup-node@v3
+              with:
+                  node-version: 16
+                  cache: npm
+                  cache-dependency-path: 'backend/package-lock.json'
+              # Устанавливаем зависимости проекта
+            - name: Устанавливаем зависимости
+              run: npm ci
+              # Запускаем проверки линтерами
+            - name: Проверяем проект ESLint
+              run: npm run lint
+            - name: Запускаем Prettier
+              run: npm run format:check
+            - name: Запускаем Jest
+              run: npm run test:unit
+
+            # Раскомментируйте и добавьте CODECOV_TOKEN в переменные Github Actions при необходимости
+            #- name: Публикуем информацию о покрытии
+            # Run the coverage:push custom NPM command
+            # that push the Jest coverage to codcov
+            # The secrets.CODECOV is a constant that is used
+            # to store the CODECOV token.
+            # The GH secrets are used like ENV variables to pass sensible informatin
+            # to the flow.
+            #  run: npm run coverage:push -- --token=${{ secrets.CODECOV_TOKEN }}

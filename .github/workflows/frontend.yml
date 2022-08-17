@@ -1,0 +1,71 @@
+# CI name
+name: 'Frontend: стайлгайд и тесты'
+
+on:
+    # Запускать при пуше в мейн-бранч или при PR в него же
+    # The job condition says “Run this for everything EXCEPT non-merged closed PRs”.
+    push:
+        branches:
+            - '**'
+            - '!main'
+        paths:
+            - frontend/**/*
+    pull_request:
+        branches:
+            - main
+        types: [opened, synchronize, closed]
+
+# A job is a set of steps that execute on the same runner.
+# The jobs can be run in parallel or sequentially and can
+# have many steps.
+# In this case, I created a single job with many steps
+# since the configuration is pretty simple but
+# I could have created a different structure using parallel jobs.
+# Each job uses an own runner.
+
+defaults:
+    run:
+        shell: bash
+        working-directory: frontend
+
+jobs:
+    # Job name
+    frontend-stylecheck:
+        # OS of the runner
+        runs-on: ubuntu-latest
+        # A step is an individual task that can run commands in a job
+        # and share the same runner.
+        # Each step can run a ready-to-use action or a bash command
+        steps:
+            # Runner meaningful name
+            - name: Клонируем репозиторий
+              uses: actions/checkout@v2
+              with:
+                  # Забираем только последний коммит из ветки для ускорения
+                  fetch-depth: 1
+            - uses: actions/setup-node@v3
+              with:
+                  node-version: 16
+                  cache: npm
+                  cache-dependency-path: 'frontend/package-lock.json'
+              # Устанавливаем зависимости проекта
+            - run: npm ci
+              # Запускаем проверки линтерами
+            - name: Проверяем проект ESLint
+              run: npm run lint
+
+            - name: Запускаем Prettier
+              run: npm run format:check
+
+            - name: Запускаем Jest
+              run: npm run test:unit
+
+            # Раскомментируйте и добавьте CODECOV_TOKEN в переменные Github Actions при необходимости
+            #- name: Публикуем информацию о покрытии
+            # Run the coverage:push custom NPM command
+            # that push the Jest coverage to codcov
+            # The secrets.CODECOV is a constant that is used
+            # to store the CODECOV token.
+            # The GH secrets are used like ENV variables to pass sensible informatin
+            # to the flow.
+            #  run: npm run coverage:push -- --token=${{ secrets.CODECOV_TOKEN }}
