@@ -1,0 +1,9 @@
+*.log
+yarn-error.log
+**/.DS_store/
+dist/
+bundle/
+node_modules/
+postgresdata/
+.idea/
+.vscode
