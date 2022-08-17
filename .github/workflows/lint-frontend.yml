@@ -11,6 +11,6 @@ jobs:
         with:
           node-version: 16
           cache: 'npm'
-          cache-dependency-path: frontend/package-lock.json
+          cache-dependency-path: ./frontend/package-lock.json
       - run: cd ./frontend && npm ci
-      - run: npx eslint ./**/*.{js,ts} -c ./.eslintrc.js
+      - run: cd ./frontend && npx eslint ./src/**/*.{js,ts} -c ./.eslintrc.js
