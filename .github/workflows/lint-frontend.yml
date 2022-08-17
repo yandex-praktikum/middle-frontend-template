@@ -10,7 +10,7 @@ jobs:
       - uses: a-b-r-o-w-n/eslint-action@v2
         with:
           repo-token: "${{ secrets.GITHUB_TOKEN }}"
-          files: "src/**/*"
+          files: "./frontend/src/**/*"
           extensions: ".js,.ts"
           working-directory: "./frontend"
           quiet: "false"
