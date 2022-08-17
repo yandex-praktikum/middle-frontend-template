@@ -12,13 +12,13 @@ const api = new HTTPTransport({});
 export const useOauth = (redirect_uri: string) => {
   const location = useLocation();
   const navigate = useNavigate();
-
+  const a = "test"
   useEffect(() => {
     if (location.search.includes('code')) {
       const params = new URLSearchParams(location.search);
-      const code = params.get('code');
+        const code = params.get('code');
 
-      navigate(`/oauth?code=${code}`);
+        navigate(`/oauth?code=${code}`);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [location.search, redirect_uri]);
