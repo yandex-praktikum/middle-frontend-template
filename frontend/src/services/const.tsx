@@ -11,6 +11,7 @@ export const AppRoute = {
   POST: '/post',
 };
 
+
 export const UrlSite = {
   URL: 'https://ya-praktikum.tech/api/v2',
 };

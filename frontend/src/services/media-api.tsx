@@ -15,6 +15,7 @@ class AudioManager extends EventEmitter {
     this.tracks = {};
   }
 
+  
   collect() {
     this.play(collectAudio);
   }
