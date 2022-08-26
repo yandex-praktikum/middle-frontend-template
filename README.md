@@ -1,7 +1,7 @@
-# middle-frontend-template
-Шаблон для проектов аурс «Мидл фронтенд-разработчик»
+# Заготовка проекта для кусра middle-frontend
 
-# Статусы тестов
-[![Backend: стайлгайд и  тесты](https://github.com/yandex-praktikum/middle-frontend-template/actions/workflows/backend.yml/badge.svg)](https://github.com/yandex-praktikum/middle-frontend-template/actions/workflows/backend.yml)
+## Здесь есть все что вам нужно для того чтобы начать создавать проекты для пятого и седьмого модулей курса.
+В папке frontend содержится клиентская часть
+В папке backend – серверная
 
-[![Frontend: стайлгайд и  тесты](https://github.com/yandex-praktikum/middle-frontend-template/actions/workflows/frontend.yml/badge.svg)](https://github.com/yandex-praktikum/middle-frontend-template/actions/workflows/frontend.yml)
+
